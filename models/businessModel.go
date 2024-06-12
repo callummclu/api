@@ -25,7 +25,6 @@ func GetPaginatedBusinesses(page int, count int) (res gin.H, err error) {
 	defer db.Close()
 
 	b := []Business{}
-
 	item_count, err := db.NewSelect().Model(&b).Offset((page - 1) * count).Limit(count).ScanAndCount(ctx)
 
 	res = gin.H{"total_items": item_count, "pages": math.Ceil(float64(item_count) / float64(count)), "current_page": page, "items": b}
